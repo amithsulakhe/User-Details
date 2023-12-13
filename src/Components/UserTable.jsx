@@ -85,7 +85,7 @@ setId(id)
                   <td>Karnataka</td>
                   <td>{ele.zip_code}</td>
                   <td className="text-center">
-                    <i className="fa-solid fa-pen  mr-3 cursor-pointer" onClick={() => handleEdit(ele?.id)}></i>
+                    <i className="fa-solid fa-pen mr-1 md:mr-3 cursor-pointer" onClick={() => handleEdit(ele?.id)}></i>
                     <i
                       className="fa-solid fa-trash text-orange-500 cursor-pointer"
                       onClick={() => handleDelete(ele?.id)}

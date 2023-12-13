@@ -13,3 +13,19 @@ table th ,td{
   .form-data{
     font-size: 15px;
   }
+
+  @media (max-width: 640px) {
+    table th{
+      padding: 5px 1px;
+      text-align: center;
+      font-size: 4px;
+    
+    }
+    
+    table td{
+      padding: 5px 2px;
+      font-size: 5px;
+      text-align: center;
+
+    }
+    }

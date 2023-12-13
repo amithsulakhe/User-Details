@@ -128,7 +128,7 @@ const UserForm = ({ bool, setEditForm,id }) => {
     <div style={bool && { position: "absolute", top: 0 }} className=' w-full h-[98vh] flex items-center justify-center'  >
       <div style={bool && { background: "#fff" }} className="form-element w-96 bg-slate-100 p-5 rounded-lg " >
         <h1 className='text-center font-bold text-2xl'>Login Page</h1>
-        <form action="" className='form-data flex flex-col gap-1' onSubmit={(e) => e.preventDefault()}>
+        <form action="" className=' w-full py-2  h-92 overflow-y-scroll md:h-[500px] form-data flex flex-col gap-1' onSubmit={(e) => e.preventDefault()}>
           <div className='first-name flex flex-col font-bold'>
             <label htmlFor="f-name">First Name:</label>
             <input type="text" name='first_name' onChange={handleChange} value={formData.first_name} placeholder='First Name:' className='px-4 py-1 shadow-lg border-2 border-black rounded-lg bg-gray-300 outline-none placeholder:text-black placeholder:font-normal focus:border-purple-600' id='f-name' />
@@ -178,7 +178,6 @@ const UserForm = ({ bool, setEditForm,id }) => {
             <div className='countries-data w-24'>
               <div className='flex relative '>
                 <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} placeholder='countries' className=' w-[100%] bg-transparent  px-1 shadow-xl border-2 border-black rounded-full outline-none placeholder:text-black placeholder:font-normal' /> <span className='w-6 absolute right-[1.5px] top-[1.5px] h-6 text-sm flex items-center justify-center font-bold text-white  bg-blue-500 rounded-full'>{filterdData.length}</span>
-
               </div>
               <select name="" className='w-[100%] mt-2 shadow-lg bg-gray-300 outline-none ' value={selectedCountry} onChange={handleSelectCountry} id="" >
 
@@ -209,7 +208,6 @@ const UserForm = ({ bool, setEditForm,id }) => {
               <input type="text" value={pinCode} onChange={(e) => setPincode(e.target.value)} placeholder='Zip-code' className='w-24 bg-transparent  px-2 shadow-xl border-2 border-black rounded-full outline-none placeholder:text-black placeholder:font-normal' />
               {
                 pinCode ? <p>{location}</p> : <p className='text-red-500 text-xs font-bold mt-2'>Enter Valid Zip-Code</p>
-
               }
             </div>
           </div>
@@ -221,7 +219,6 @@ const UserForm = ({ bool, setEditForm,id }) => {
               <button type='submit' onClick={handleSubmit} className='bg-green-500 w-full py-2 font-bold shadow-lg rounded-lg hover:bg-green-600 transition-all duration-300'>Submit</button>
             </div>
           }
-
 
         </form>
       </div>
