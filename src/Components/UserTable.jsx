@@ -37,8 +37,6 @@ const handleSignOut=()=>{
       bool: true
     })
 setId(id)
-
-
   }
 
   const handleDelete = (id) => {
@@ -54,8 +52,6 @@ setId(id)
         <button className='py-2 px-3 text-white font-bold rounded-lg bg-red-500' onClick={handleSignOut}>Sign-Out</button>
       </div>
       <div className="w-full py-2  h-92 overflow-y-scroll md:h-[500px]">
-
-
 
         <table className="w-full ">
           <thead>

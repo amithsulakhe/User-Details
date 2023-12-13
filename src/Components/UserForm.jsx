@@ -128,7 +128,7 @@ const UserForm = ({ bool, setEditForm,id }) => {
     <div style={bool && { position: "absolute", top: 0 }} className=' w-full h-[98vh] flex items-center justify-center'  >
       <div style={bool && { background: "#fff" }} className="form-element w-96 bg-slate-100 p-5 rounded-lg " >
         <h1 className='text-center font-bold text-2xl'>Login Page</h1>
-        <form action="" className=' w-full py-2  h-92 overflow-y-scroll md:h-[500px] form-data flex flex-col gap-1' onSubmit={(e) => e.preventDefault()}>
+        <form action="" className=' w-full py-2  h-92 overflow-y-scroll  form-data flex flex-col gap-1' onSubmit={(e) => e.preventDefault()}>
           <div className='first-name flex flex-col font-bold'>
             <label htmlFor="f-name">First Name:</label>
             <input type="text" name='first_name' onChange={handleChange} value={formData.first_name} placeholder='First Name:' className='px-4 py-1 shadow-lg border-2 border-black rounded-lg bg-gray-300 outline-none placeholder:text-black placeholder:font-normal focus:border-purple-600' id='f-name' />
