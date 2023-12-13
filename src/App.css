@@ -1,0 +1,15 @@
+table th ,td{
+    border: 1px solid black;
+    text-align: left;
+  }
+  table th{
+    padding: 10px 12px;
+    background-color: #B3B4B3;
+  }
+  table td{
+    padding: 10px 12px;
+  background-color: white;
+  }
+  .form-data{
+    font-size: 15px;
+  }
