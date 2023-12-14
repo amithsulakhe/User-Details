@@ -5,9 +5,8 @@ import { collref, db } from './Firebase';
 import { addDoc, doc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { checkValidateform } from './Validate';
-const UserForm = ({ bool, setEditForm,id }) => {
+const UserForm = ({ bool, setEditForm, id }) => {
   const [error, setError] = useState("")
-  const [initialError, setinitialError] = useState(false)
   const navigate = useNavigate()
   const [inputValue, setInputValue] = useState("")
   const [pinCode, setPincode] = useState("")
@@ -24,7 +23,7 @@ const UserForm = ({ bool, setEditForm,id }) => {
     email_id: "",
     address_1: "",
     address_2: "",
-    
+
   })
 
 
@@ -76,15 +75,7 @@ const UserForm = ({ bool, setEditForm,id }) => {
 
   }
 
-  // const handleSelectState = (e) => {
-  //   const value = e.target.value
-  //   // console.log(value);
-  //   setSelectedState(value)
-  //   const filterStates = countriesData.filter((country) => country.name.toLowerCase() === value.toLowerCase())
-  //   setStates(filterStates[0].states)
-  //   console.log(filterStates);
 
-  // }
   const getCountriesData = async () => {
     const data = await fetch("https://countriesnow.space/api/v0.1/countries/states")
     const json = await data.json()
@@ -104,43 +95,44 @@ const UserForm = ({ bool, setEditForm,id }) => {
 
   const handleSubmit = () => {
 
-    const message = checkValidateform(formData.email_id);
-    setError(message);
 
-   if(formData.first_name && formData.last_name && formData.address_1 && formData.email_id && pinCode && phoneNumber && State && selectedCountry){
-    addDoc(collref, {
-      first_name: formData.first_name,
-      last_name: formData.last_name,
-      address_1: formData.address_1,
-      email_id: formData.email_id,
-      zip_code: pinCode,
-      phoneNumber:phoneNumber,
-      selectedCountry:selectedCountry,
-      State:State
-      
-    })
-    console.log(formData);
 
-    navigate("/details")
-   }
-   else{
-    setinitialError(true)
-   }
- 
+    if (formData.first_name && formData.last_name && formData.address_1 && formData.email_id && pinCode && phoneNumber && State && selectedCountry) {
+      const message = checkValidateform(formData.email_id);
+      setError(message);
+      addDoc(collref, {
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        address_1: formData.address_1,
+        email_id: formData.email_id,
+        zip_code: pinCode,
+        phoneNumber: phoneNumber,
+        selectedCountry: selectedCountry,
+        State: State
+
+      })
+      console.log(formData);
+      navigate("/details")
+    }
+    else {
+
+      alert("Please fill the form")
+    }
+
 
   }
 
-  const handleSave=()=>{
-    const docRef=doc(db,"User",id)
-    updateDoc(docRef,{
+  const handleSave = () => {
+    const docRef = doc(db, "User", id)
+    updateDoc(docRef, {
       first_name: formData.first_name,
       last_name: formData.last_name,
       address_1: formData.address_1,
       email_id: formData.email_id,
       zip_code: pinCode,
-      phoneNumber:phoneNumber,
-      selectedCountry:selectedCountry,
-      State:State
+      phoneNumber: phoneNumber,
+      selectedCountry: selectedCountry,
+      State: State
     })
     setEditForm({
       bool: false
@@ -156,39 +148,40 @@ const UserForm = ({ bool, setEditForm,id }) => {
   }
 
   return (
-    <div style={bool && { position: "absolute", top: 0,left:0 }} className=' w-full h-[98vh] flex items-center justify-center'  >
+    <div style={bool && { position: "absolute", top: 0, left: 0 }} className=' w-full h-[98vh] flex items-center justify-center'  >
       <div style={bool && { background: "#fff" }} className="form-element w-96 bg-slate-100 p-5 rounded-lg " >
         <h1 className='text-center font-bold text-2xl'>Login Page</h1>
         <form action="" className=' w-full py-2  h-92 overflow-y-auto  form-data flex flex-col gap-1' onSubmit={(e) => e.preventDefault()}>
           <div className='first-name flex flex-col font-bold'>
-            <label htmlFor="f-name">First Name:</label>
+            <label htmlFor="f-name">First Name: <span className='text-red-600 text-[18px]'>*</span> </label> 
             <input type="text" name='first_name' onChange={handleChange} value={formData.first_name} placeholder='First Name:' className='px-4 py-1 shadow-lg border-2 border-black rounded-lg bg-gray-300 outline-none placeholder:text-black placeholder:font-normal focus:border-purple-600' id='f-name' />
-          {
-            (initialError ||
-           formData.first_name.length>=1 && formData.first_name.length < 5 ) && <p className='text-[12px] text-red-600 text-center'>Enter First-name character should be greater than 5</p>
-          }
-         
+            {
+              (
+                formData.first_name.length >= 1 && formData.first_name.length < 5) && <p className='text-[12px] text-red-600 text-center'>Enter First-name character should be greater than 5</p>
+            }
+
           </div>
 
           <div className='last-name flex flex-col font-bold'>
-            <label htmlFor="l-name" >Last Name:</label>
+            <label htmlFor="l-name" >Last Name: <span className='text-red-600 text-[18px]'>*</span></label>
             <input type="text" name='last_name' onChange={handleChange} value={formData.last_name} placeholder='Last Name:' className='px-4 py-1 shadow-lg border-2 border-black rounded-lg bg-gray-300 outline-none placeholder:text-black placeholder:font-normal focus:border-purple-600' id='l-name' />
-            { (initialError ||
-           formData.last_name.length>=1 && formData.last_name.length < 5) && <p className='text-[12px] text-red-600 text-center'>Enter last-name character should be greater than 5</p>
-          }
+            {(
+              formData.last_name.length >= 1 && formData.last_name.length < 5) && <p className='text-[12px] text-red-600 text-center'>Enter last-name character should be greater than 5</p>
+            }
 
 
           </div>
           <div className='email-id flex flex-col font-bold'>
-            <label htmlFor="e-id"  >Email Id:
-            </label> 
+            <label htmlFor="e-id"  >Email Id: <span className='text-red-600 text-[18px]'>*</span>
+            </label>
             <input type="text" name='email_id' value={formData.email_id} onChange={handleChange} placeholder='Email-id' className='px-4 py-1 shadow-lg border-2 border-black rounded-lg bg-gray-300 outline-none placeholder:text-black placeholder:font-normal focus:border-purple-600' id='e-id' />
             <p className='text-[12px] text-red-600 text-center'>{error}</p>
 
           </div>
 
           <div>
-            <PhoneInput
+              
+            <PhoneInput 
               placeholder="Enter phone number"
               value={phoneNumber}
               onChange={handleOnChange}
@@ -198,12 +191,12 @@ const UserForm = ({ bool, setEditForm,id }) => {
             )}
           </div>
           <div className='address-1 flex flex-col font-bold'>
-            <label htmlFor="add1-id">Address 1:(Mandatory)
+            <label htmlFor="add1-id">Address 1: <span className='text-red-600 text-[18px]'>*</span>
             </label>
-            <textarea name="address_1" style={{maxHeight:"100px"}} value={formData.address_1} onChange={handleChange} className='px-4 py-1 shadow-lg border-2  border-black rounded-lg bg-gray-300 outline-none placeholder:text-black placeholder:font-normal focus:border-purple-600' id="add1-id" cols="10"   rows="2"></textarea>
-            {(initialError ||
-           formData.address_1.length>=1 && formData.last_name.length < 50) && <p className='text-[12px] text-red-600 text-center'>Please fill adreess</p>
-          }
+            <textarea name="address_1" style={{ maxHeight: "100px" }} value={formData.address_1} onChange={handleChange} className='px-4 py-1 shadow-lg border-2  border-black rounded-lg bg-gray-300 outline-none placeholder:text-black placeholder:font-normal focus:border-purple-600' id="add1-id" cols="10" rows="2"></textarea>
+            {(
+              formData.address_1.length >= 1 && formData.last_name.length < 50) && <p className='text-[12px] text-red-600 text-center'>Please fill adreess</p>
+            }
 
 
           </div>
@@ -211,7 +204,7 @@ const UserForm = ({ bool, setEditForm,id }) => {
           <div className='address-2 flex flex-col font-bold'>
             <label htmlFor="add2-id">Address 2:
             </label>
-            <textarea name="address_2" style={{maxHeight:"100px"}} value={formData.address_2} onChange={handleChange} className='px-4 py-1 shadow-lg bg-gray-300 outline-none border-2 border-black rounded-lg placeholder:text-black placeholder:font-normal  focus:border-purple-600' id="add2-id" cols="10" rows="2"></textarea>
+            <textarea name="address_2" style={{ maxHeight: "100px" }} value={formData.address_2} onChange={handleChange} className='px-4 py-1 shadow-lg bg-gray-300 outline-none border-2 border-black rounded-lg placeholder:text-black placeholder:font-normal  focus:border-purple-600' id="add2-id" cols="10" rows="2"></textarea>
 
           </div>
 
@@ -235,7 +228,7 @@ const UserForm = ({ bool, setEditForm,id }) => {
                 <span className='w-6 absolute right-[1.5px] top-[1.5px] h-6 text-sm flex items-center justify-center font-bold text-white  bg-blue-500 rounded-full'>{states.length}</span>
               </div>
 
-              <select name="" className='w-[100%] mt-2 shadow-lg bg-gray-300 outline-none ' id="" value={State} onChange={(e)=>setState(e.target.value)}>
+              <select name="" className='w-[100%] mt-2 shadow-lg bg-gray-300 outline-none ' id="" value={State} onChange={(e) => setState(e.target.value)}>
                 {
                   states.length ?
                     states?.map((state) => <option key={state.name} value={state.name}>{state.name}</option>) : <option>No States Found</option>
@@ -247,11 +240,12 @@ const UserForm = ({ bool, setEditForm,id }) => {
             <div className="postal-code ">
 
               <input type="text" value={pinCode} onChange={(e) => setPincode(e.target.value)} placeholder='Zip-code' className='w-24 bg-transparent  px-2 shadow-xl border-2 border-black rounded-full outline-none placeholder:text-black placeholder:font-normal' />
+              <span className='text-red-600 text-[18px]'>*</span>
               {
                 pinCode ? <p>{location}</p> : <p className='text-red-500 text-xs font-bold mt-2'>Enter Valid Zip-Code</p>
               }
             </div>
-           
+
 
           </div>
           {
