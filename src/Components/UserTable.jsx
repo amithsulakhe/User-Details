@@ -51,7 +51,7 @@ setId(id)
 
         <button className='py-2 px-3 text-white font-bold rounded-lg bg-red-500' onClick={handleSignOut}>Sign-Out</button>
       </div>
-      <div className="w-full py-2  h-92 overflow-y-scroll md:h-[500px]">
+      <div className="w-full py-2  h-92 overflow-y-auto md:h-[500px]">
 
         <table className="w-full ">
           <thead>
@@ -64,7 +64,7 @@ setId(id)
               <th>Country</th>
               <th>State</th>
               <th>Zip-Code</th>
-              <th>EditDel/</th>
+              <th>Edit/Del</th>
             </tr>
           </thead>
           <tbody>
@@ -75,10 +75,10 @@ setId(id)
                   <td>{ele.first_name} </td>
                   <td>{ele.last_name}</td>
                   <td>{ele.email_id}</td>
-                  <td>+919206336568</td>
+                  <td>{ele.phoneNumber}</td>
                   <td>{ele.address_1}</td>
-                  <td>India</td>
-                  <td>Karnataka</td>
+                  <td>{ele.selectedCountry}</td>
+                  <td>{ele.State}</td>
                   <td>{ele.zip_code}</td>
                   <td className="text-center">
                     <i className="fa-solid fa-pen mr-1 md:mr-3 cursor-pointer" onClick={() => handleEdit(ele?.id)}></i>
