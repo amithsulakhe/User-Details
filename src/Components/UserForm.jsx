@@ -153,7 +153,7 @@ const UserForm = ({ bool, setEditForm, id }) => {
         <h1 className='text-center font-bold text-2xl'>Login Page</h1>
         <form action="" className=' w-full py-2  h-92 overflow-y-auto  form-data flex flex-col gap-1' onSubmit={(e) => e.preventDefault()}>
           <div className='first-name flex flex-col font-bold'>
-            <label htmlFor="f-name">First Name: <span className='text-red-600 text-[18px]'>*</span> </label> 
+            <label htmlFor="f-name">First Name: <span className='text-red-600 text-[18px]'>*</span> </label>
             <input type="text" name='first_name' onChange={handleChange} value={formData.first_name} placeholder='First Name:' className='px-4 py-1 shadow-lg border-2 border-black rounded-lg bg-gray-300 outline-none placeholder:text-black placeholder:font-normal focus:border-purple-600' id='f-name' />
             {
               (
@@ -180,8 +180,8 @@ const UserForm = ({ bool, setEditForm, id }) => {
           </div>
 
           <div>
-              
-            <PhoneInput 
+
+            <PhoneInput
               placeholder="Enter phone number"
               value={phoneNumber}
               onChange={handleOnChange}
@@ -195,7 +195,7 @@ const UserForm = ({ bool, setEditForm, id }) => {
             </label>
             <textarea name="address_1" style={{ maxHeight: "100px" }} value={formData.address_1} onChange={handleChange} className='px-4 py-1 shadow-lg border-2  border-black rounded-lg bg-gray-300 outline-none placeholder:text-black placeholder:font-normal focus:border-purple-600' id="add1-id" cols="10" rows="2"></textarea>
             {(
-              formData.address_1.length >= 1 && formData.last_name.length < 50) && <p className='text-[12px] text-red-600 text-center'>Please fill adreess</p>
+              formData.address_1.length >= 1 && formData.address_1.length < 10) && <p className='text-[12px] text-red-600 text-center'>Please fill More inforamtion about address</p>
             }
 
 
