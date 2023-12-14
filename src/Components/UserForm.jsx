@@ -115,7 +115,6 @@ const UserForm = ({ bool, setEditForm, id }) => {
       navigate("/details")
     }
     else {
-
       alert("Please fill the form")
     }
 
@@ -182,7 +181,7 @@ const UserForm = ({ bool, setEditForm, id }) => {
           <div>
 
             <PhoneInput
-              placeholder="Enter phone number"
+              placeholder="Enter phone number" className='focus:border-2 border-purple-500'
               value={phoneNumber}
               onChange={handleOnChange}
             />
@@ -219,7 +218,7 @@ const UserForm = ({ bool, setEditForm, id }) => {
                   filterdData.map((country, i) => <option key={country.iso2} value={country.name.common}>{country.name}</option>) : <option >No Results found</option>
                 }
               </select>
-
+          <p className='text-orange-500 font-bold font-mono '>{selectedCountry}</p>
             </div>
 
             <div className='states-data w-24'>
@@ -235,6 +234,8 @@ const UserForm = ({ bool, setEditForm, id }) => {
                 }
 
               </select>
+          <p className='text-green-600 font-bold font-mono '>{State}</p>
+
             </div>
 
             <div className="postal-code ">
