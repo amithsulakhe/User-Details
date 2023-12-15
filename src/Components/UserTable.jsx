@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
 
 const UserTable = () => {
-const navigate=useNavigate()
-  const [id, setId] = useState("")
+  const navigate = useNavigate()
+  const [Id, setId] = useState("")
   const [editForm, setEditForm] = useState({
 
     bool: false
@@ -28,17 +28,22 @@ const navigate=useNavigate()
 
     })
   }, [])
-const handleSignOut=()=>{
-  navigate("/")
-}
+
+  const handleSignOut = () => {
+    navigate("/")
+  }
   const handleEdit = (id) => {
     setEditForm({
       position: "absolute",
       top: 0,
       bool: true
     })
-setId(id)
+ const filterdData=userData.filter((ele)=>ele.id===id)
+    console.log(filterdData);
+    setId({id,filterdData})
+
   }
+
 
   const handleDelete = (id) => {
     const docRef = doc(db, "User", id)
@@ -53,59 +58,59 @@ setId(id)
         <button className='py-2 px-3 text-white font-bold rounded-lg bg-red-500' onClick={handleSignOut}>Sign-Out</button>
       </div>
       <div className="w-full py-2  h-92 overflow-y-auto md:h-[500px]">
-{
+        {
 
 
-  userData.length?   <table className="w-full ">
-  <thead>
-    <tr>
-      <th>First-Name</th>
-      <th>Last-name</th>
-      <th>Email-id</th>
-      <th>Mobile No</th>
-      <th>Address-1</th>
-      <th>Country</th>
-      <th>State</th>
-      <th>Zip-Code</th>
-      <th>Edit/Del</th>
-    </tr>
-  </thead>
-  
-  <tbody>
+          userData.length ? <table className="w-full ">
+            <thead>
+              <tr>
+                <th>First-Name</th>
+                <th>Last-name</th>
+                <th>Email-id</th>
+                <th>Mobile No</th>
+                <th>Address-1</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>Zip-Code</th>
+                <th>Edit/Del</th>
+              </tr>
+            </thead>
 
-    
-    {userData?.map((ele) => {
-        return <tr key={ele.id}>
-          <td>{ele.first_name} </td>
-          <td>{ele.last_name}</td>
-          <td>{ele.email_id}</td>
-          <td>{ele.phoneNumber}</td>
-          <td>{ele.address_1}</td>
-          <td>{ele.selectedCountry}</td>
-          <td>{ele.State}</td>
-          <td>{ele.zip_code}</td>
-          <td className="text-center">
-            <i className="fa-solid fa-pen mr-1 md:mr-3 cursor-pointer" onClick={() => handleEdit(ele?.id)}></i>
-            <i
-              className="fa-solid fa-trash text-orange-500 cursor-pointer"
-              onClick={() => handleDelete(ele?.id)}
-            ></i>
-          </td>
-
-        </tr>
-      })
-    }
+            <tbody>
 
 
+              {userData?.map((ele) => {
+                return <tr key={ele.id}>
+                  <td>{ele.first_name} </td>
+                  <td>{ele.last_name}</td>
+                  <td>{ele.email_id}</td>
+                  <td>{ele.phoneNumber}</td>
+                  <td>{ele.address_1}</td>
+                  <td>{ele.selectedCountry}</td>
+                  <td>{ele.State}</td>
+                  <td>{ele.zip_code}</td>
+                  <td className="text-center">
+                    <i className="fa-solid fa-pen mr-1 md:mr-3 cursor-pointer" onClick={() => handleEdit(ele?.id)}></i>
+                    <i
+                      className="fa-solid fa-trash text-orange-500 cursor-pointer"
+                      onClick={() => handleDelete(ele?.id)}
+                    ></i>
+                  </td>
 
-  </tbody>
-</table>:<ErrorPage/>
-}
-     
+                </tr>
+              })
+              }
+
+
+
+            </tbody>
+          </table> : <ErrorPage />
+        }
+
 
       </div>
       {
-        editForm.bool && <UserForm id={id} setEditForm={setEditForm} bool={editForm.bool}  />
+        editForm.bool && <UserForm getId={Id} handleEdit={handleEdit} setEditForm={setEditForm} bool={editForm.bool} />
 
       }
 
