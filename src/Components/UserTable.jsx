@@ -2,14 +2,12 @@ import { deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { collref, db } from './Firebase';
 import UserForm from './UserForm';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
 
 const UserTable = () => {
-  const navigate = useNavigate()
   const [Id, setId] = useState("")
   const [editForm, setEditForm] = useState({
-
     bool: false
   })
   const [userData, setUserData] = useState([])
@@ -29,18 +27,16 @@ const UserTable = () => {
     })
   }, [])
 
-  const handleSignOut = () => {
-    navigate("/")
-  }
+
   const handleEdit = (id) => {
     setEditForm({
       position: "absolute",
       top: 0,
       bool: true
     })
- const filterdData=userData.filter((ele)=>ele.id===id)
+    const filterdData = userData.filter((ele) => ele.id === id)
     console.log(filterdData);
-    setId({id,filterdData})
+    setId({ id, filterdData })
 
   }
 
@@ -50,12 +46,13 @@ const UserTable = () => {
     deleteDoc(docRef)
 
   }
+
   return (
     <div className='p-6 m-2 relative  border-4 border-black rounded-lg bg-blue-50 h-[98vh]'>
       <div className='flex justify-around'>
         <h1 className='font-bold text-xl md:text-2xl'>MY USER DETAILS</h1>
+        <Link className='py-2 px-3 text-white font-bold rounded-lg bg-red-500' to="/">Home</Link>
 
-        <button className='py-2 px-3 text-white font-bold rounded-lg bg-red-500' onClick={handleSignOut}>Sign-Out</button>
       </div>
       <div className="w-full py-2  h-92 overflow-y-auto md:h-[500px]">
         {

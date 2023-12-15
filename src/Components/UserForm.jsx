@@ -128,9 +128,9 @@ const UserForm = ({ bool, setEditForm, getId }) => {
       address_1: formData.address_1,
       email_id: formData.email_id,
       zip_code: formData.pinCode,
-      phoneNumber: phoneNumber,
-      selectedCountry: selectedCountry,
-      State: State,
+      phoneNumber: phoneNumber || (data && data.phoneNumber) || '',
+      selectedCountry: (selectedCountry||(selectedCountry&&data.selectedCountry)||"Select Country"),
+      State: (State || (data && data.State)) || 'Select State',
     });
     setEditForm({
       bool: false,
@@ -146,7 +146,7 @@ const UserForm = ({ bool, setEditForm, getId }) => {
   return (
     <div style={bool && { position: "absolute", top: 0, left: 0 }} className='w-full h-[98vh] flex items-center justify-center'>
       <div style={bool && { background: "#fff" }} className="form-element w-96 bg-slate-100 p-5 rounded-lg">
-        <h1 className='text-center font-bold text-2xl'>Login Page</h1>
+        <h1 className='text-center font-bold text-2xl'>{!bool?"Login Page":"Edit Page"}</h1>
         <form className='w-full py-2 h-92 overflow-y-auto form-data flex flex-col gap-1' onSubmit={(e) => e.preventDefault()}>
           <div className='first-name flex flex-col font-bold'>
             <label htmlFor="f-name">First Name: <span className='text-red-600 text-[18px]'>*</span> </label>
@@ -195,12 +195,13 @@ const UserForm = ({ bool, setEditForm, getId }) => {
           </div>
 
           <div>
-            <PhoneInput
-              placeholder="Enter phone number"
-              className='focus:border-2 border-purple-500'
-              value={phoneNumber ? phoneNumber : data.phoneNumber}
-              onChange={handleOnChange}
-            />
+          <PhoneInput
+  placeholder="Enter phone number"
+  className='focus:border-2 border-purple-500'
+  value={phoneNumber || (data && data.phoneNumber) || ''}
+  onChange={handleOnChange}
+/>
+
             {phoneNumber && !isValidPhoneNumber(phoneNumber) && (
               <div style={{ color: 'red' }}>Invalid phone number</div>
             )}
@@ -300,12 +301,14 @@ const UserForm = ({ bool, setEditForm, getId }) => {
                   <option>No States Found</option>
                 )}
               </select>
-              <p className='text-green-600 font-bold font-mono'>{State ? State : data.State}</p>
+              <p className='text-green-600 font-bold font-mono'>{(State || (data && data.State)) || 'No State'}</p>
+
             </div>
 
             <div className="postal-code ">
               <input type="text"
-                value={formData.pinCode ? formData.pinCode : data.zip_code} name='pinCode'
+               value={(formData.pinCode || (data && data.zip_code)) || ''}
+               name='pinCode'
                 onChange={handleChange}
                 placeholder='Zip-code'
                 className='w-24 bg-transparent px-2 shadow-xl border-2 border-black rounded-full outline-none placeholder:text-black placeholder:font-normal'
