@@ -5,10 +5,11 @@ import { collref, db } from './Firebase';
 import { addDoc, doc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { checkValidateform } from './Validate';
+import ErrorForm from './ErrorForm';
 
 const UserForm = ({ bool, setEditForm, getId }) => {
   const data = getId?.filterdData[0]
-  const [error, setError] = useState("");
+  const [errorPage, setErrorPage] = useState(false)
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
   const [location, setlocation] = useState([]);
@@ -48,7 +49,12 @@ const UserForm = ({ bool, setEditForm, getId }) => {
   useEffect(() => {
     getCountriesData();
   }, [inputValue]);
-
+useEffect(()=>{
+  const timer=setTimeout(() => {
+    setErrorPage(false)
+  }, 2000);
+  return ()=>clearTimeout(timer)
+},[errorPage])
   useEffect(() => {
     const timer = setTimeout(() => {
       getPincode();
@@ -92,7 +98,6 @@ const UserForm = ({ bool, setEditForm, getId }) => {
   const handleSubmit = () => {
     const message = checkValidateform(formData.email_id);
     console.log(message);
-    setError(message);
     if (
       formData.first_name.length >= 5 &&
       formData.last_name.length >= 5 &&
@@ -117,7 +122,7 @@ const UserForm = ({ bool, setEditForm, getId }) => {
       console.log(formData);
       navigate("/details");
     } else {
-      alert("Please fill the form");
+      setErrorPage(true)    
     }
   };
 
@@ -142,8 +147,7 @@ if(formData.first_name&&formData.last_name&&formData.email_id&&formData.email_id
     });
   }
   else{
-    alert("Please fill the form");
-    
+setErrorPage(true)    
   }
 
   };
@@ -155,7 +159,11 @@ if(formData.first_name&&formData.last_name&&formData.email_id&&formData.email_id
   };
 
   return (
-    <div style={bool && { position: "absolute", top: 0, left: 0 }} className='w-full h-[98vh] flex items-center justify-center'>
+    <div style={bool && { position: "absolute", top: 0, left: 0 }} className='w-full h-[98vh] flex flex-col relative items-center justify-center'>
+      {
+        errorPage&&<ErrorForm setErrorPage={setErrorPage}/>
+
+      }
       <div style={bool && { background: "#fff" }} className="form-element w-96 bg-slate-100 p-5 rounded-lg">
         <h1 className='text-center font-bold text-2xl'>{!bool?"Login Page":"Edit Page"}</h1>
         <form className='w-full py-2 h-92 overflow-y-auto form-data flex flex-col gap-1' onSubmit={(e) => e.preventDefault()}>
