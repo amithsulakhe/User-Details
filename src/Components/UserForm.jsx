@@ -8,7 +8,6 @@ import { checkValidateform } from './Validate';
 
 const UserForm = ({ bool, setEditForm, getId }) => {
   const data = getId?.filterdData[0]
-  console.log(data);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
@@ -25,7 +24,7 @@ const UserForm = ({ bool, setEditForm, getId }) => {
     email_id: "",
     address_1: "",
     address_2: "",
-    zip_code: "",
+    pinCode: "",
     phoneNumber: "",
     State: "",
     selectedCountry: ""
@@ -91,6 +90,9 @@ const UserForm = ({ bool, setEditForm, getId }) => {
   };
 
   const handleSubmit = () => {
+    const message = checkValidateform(formData.email_id);
+    console.log(message);
+    setError(message);
     if (
       formData.first_name.length >= 5 &&
       formData.last_name.length >= 5 &&
@@ -99,10 +101,9 @@ const UserForm = ({ bool, setEditForm, getId }) => {
       formData.pinCode &&
       phoneNumber &&
       State &&
-      selectedCountry
+      selectedCountry && !message
     ) {
-      const message = checkValidateform(formData.email_id);
-      setError(message);
+   
       addDoc(collref, {
         first_name: formData.first_name,
         last_name: formData.last_name,
@@ -121,7 +122,11 @@ const UserForm = ({ bool, setEditForm, getId }) => {
   };
 
   const handleSave = () => {
+console.log(formData);
     const docRef = doc(db, "User", getId.id);
+if(formData.first_name&&formData.last_name&&formData.email_id&&formData.email_id&&formData.pinCode&&(phoneNumber || (data && data.phoneNumber))&&(selectedCountry||(selectedCountry&&data.selectedCountry)&&(State || (data && data.State))))
+{
+    
     updateDoc(docRef, {
       first_name: formData.first_name,
       last_name: formData.last_name,
@@ -135,6 +140,12 @@ const UserForm = ({ bool, setEditForm, getId }) => {
     setEditForm({
       bool: false,
     });
+  }
+  else{
+    alert("Please fill the form");
+    
+  }
+
   };
 
   const handleCancel = () => {
@@ -191,7 +202,7 @@ const UserForm = ({ bool, setEditForm, getId }) => {
               className='px-4 py-1 shadow-lg border-2 border-black rounded-lg bg-gray-300 outline-none placeholder:text-black placeholder:font-normal focus:border-purple-600'
               id='e-id'
             />
-            <p className='text-[12px] text-red-600 text-center'>{error}</p>
+            <p className='text-[12px] text-red-600 text-center'>{(!formData.email_id.includes(".com")&&formData.email_id.length>0&&"Enter a Valid Mail")}</p>
           </div>
 
           <div>
