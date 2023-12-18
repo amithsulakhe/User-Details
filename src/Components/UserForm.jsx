@@ -49,12 +49,12 @@ const UserForm = ({ bool, setEditForm, getId }) => {
   useEffect(() => {
     getCountriesData();
   }, [inputValue]);
-useEffect(()=>{
-  const timer=setTimeout(() => {
-    setErrorPage(false)
-  }, 2000);
-  return ()=>clearTimeout(timer)
-},[errorPage])
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrorPage(false)
+    }, 2000);
+    return () => clearTimeout(timer)
+  }, [errorPage])
   useEffect(() => {
     const timer = setTimeout(() => {
       getPincode();
@@ -108,7 +108,7 @@ useEffect(()=>{
       State &&
       selectedCountry && !message
     ) {
-   
+
       addDoc(collref, {
         first_name: formData.first_name,
         last_name: formData.last_name,
@@ -122,33 +122,32 @@ useEffect(()=>{
       console.log(formData);
       navigate("/details");
     } else {
-      setErrorPage(true)    
+      setErrorPage(true)
     }
   };
 
   const handleSave = () => {
-console.log(formData);
+    console.log(formData);
     const docRef = doc(db, "User", getId.id);
-if(formData.first_name&&formData.last_name&&formData.email_id&&formData.email_id&&formData.pinCode&&(phoneNumber || (data && data.phoneNumber))&&(selectedCountry||(selectedCountry&&data.selectedCountry)&&(State || (data && data.State))))
-{
-    
-    updateDoc(docRef, {
-      first_name: formData.first_name,
-      last_name: formData.last_name,
-      address_1: formData.address_1,
-      email_id: formData.email_id,
-      zip_code: formData.pinCode,
-      phoneNumber: phoneNumber || (data && data.phoneNumber) || '',
-      selectedCountry: (selectedCountry||(selectedCountry&&data.selectedCountry)||"Select Country"),
-      State: (State || (data && data.State)) || 'Select State',
-    });
-    setEditForm({
-      bool: false,
-    });
-  }
-  else{
-setErrorPage(true)    
-  }
+    if (formData.first_name && formData.last_name && formData.email_id && formData.email_id && formData.pinCode && (phoneNumber || (data && data.phoneNumber)) && (selectedCountry || (selectedCountry && data.selectedCountry) && (State || (data && data.State)))) {
+
+      updateDoc(docRef, {
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        address_1: formData.address_1,
+        email_id: formData.email_id,
+        zip_code: formData.pinCode,
+        phoneNumber: phoneNumber || (data && data.phoneNumber) || '',
+        selectedCountry: (selectedCountry || (selectedCountry && data.selectedCountry) || "Select Country"),
+        State: (State || (data && data.State)) || 'Select State',
+      });
+      setEditForm({
+        bool: false,
+      });
+    }
+    else {
+      setErrorPage(true)
+    }
 
   };
 
@@ -161,11 +160,11 @@ setErrorPage(true)
   return (
     <div style={bool && { position: "absolute", top: 0, left: 0 }} className='w-full h-[98vh] flex flex-col relative items-center justify-center'>
       {
-        errorPage&&<ErrorForm setErrorPage={setErrorPage}/>
+        errorPage && <ErrorForm setErrorPage={setErrorPage} />
 
       }
       <div style={bool && { background: "#fff" }} className="form-element w-96 bg-slate-100 p-5 rounded-lg">
-        <h1 className='text-center font-bold text-2xl'>{!bool?"Login Page":"Edit Page"}</h1>
+        <h1 className='text-center font-bold text-2xl'>{!bool ? "Login Page" : "Edit Page"}</h1>
         <form className='w-full py-2 h-92 overflow-y-auto form-data flex flex-col gap-1' onSubmit={(e) => e.preventDefault()}>
           <div className='first-name flex flex-col font-bold'>
             <label htmlFor="f-name">First Name: <span className='text-red-600 text-[18px]'>*</span> </label>
@@ -210,16 +209,16 @@ setErrorPage(true)
               className='px-4 py-1 shadow-lg border-2 border-black rounded-lg bg-gray-300 outline-none placeholder:text-black placeholder:font-normal focus:border-purple-600'
               id='e-id'
             />
-            <p className='text-[12px] text-red-600 text-center'>{(!formData.email_id.includes(".com")&&formData.email_id.length>0&&"Enter a Valid Mail")}</p>
+            <p className='text-[12px] text-red-600 text-center'>{(!formData.email_id.includes(".com") && formData.email_id.length > 0 && "Enter a Valid Mail")}</p>
           </div>
 
           <div>
-          <PhoneInput
-  placeholder="Enter phone number"
-  className='focus:border-2 border-purple-500'
-  value={phoneNumber || (data && data.phoneNumber) || ''}
-  onChange={handleOnChange}
-/>
+            <PhoneInput
+              placeholder="Enter phone number"
+              className='focus:border-2 border-purple-500'
+              value={phoneNumber || (data && data.phoneNumber) || ''}
+              onChange={handleOnChange}
+            />
 
             {phoneNumber && !isValidPhoneNumber(phoneNumber) && (
               <div style={{ color: 'red' }}>Invalid phone number</div>
@@ -326,8 +325,8 @@ setErrorPage(true)
 
             <div className="postal-code ">
               <input type="text"
-               value={(formData.pinCode || (data && data.zip_code)) || ''}
-               name='pinCode'
+                value={(formData.pinCode || (data && data.zip_code)) || ''}
+                name='pinCode'
                 onChange={handleChange}
                 placeholder='Zip-code'
                 className='w-24 bg-transparent px-2 shadow-xl border-2 border-black rounded-full outline-none placeholder:text-black placeholder:font-normal'
@@ -360,7 +359,7 @@ setErrorPage(true)
               <button
                 type='submit'
                 onClick={handleSubmit}
-                className='bg-green-500 w-full py-2 font-bold shadow-lg rounded-lg hover:bg-green-600 transition-all duration-300'
+                className='bg-green-500  w-full py-2 font-bold shadow-lg rounded-lg hover:bg-green-600 transition-all duration-300'
               >
                 Submit
               </button>

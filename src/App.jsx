@@ -2,7 +2,8 @@ import './App.css'
 import UserForm from './Components/UserForm'
 import UserTable from './Components/UserTable'
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
-
+import { Provider } from 'react-redux'
+import appStore from './Components/Redux/store'
 function App() {
   const appRouter = createBrowserRouter([
     {
@@ -18,10 +19,18 @@ function App() {
 
   return (
     <>
-      <div>
+        <Provider store={appStore}>
         <RouterProvider router={appRouter}>
-        </RouterProvider>
+
+
+      <div>
+
+
       </div>
+      </RouterProvider>
+
+      </Provider>
+
     </>
   )
 }
