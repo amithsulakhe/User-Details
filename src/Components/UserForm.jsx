@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 const UserForm = ({ bool, getId }) => {
   const data = getId?.filterdData[0];
   const dispatch = useDispatch();
-
+  const [emailValid, setEmailValid] = useState("")
   const [errorPage, setErrorPage] = useState(false);
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
@@ -110,6 +110,7 @@ const UserForm = ({ bool, getId }) => {
 
   const handleSubmit = () => {
     const message = checkValidateform(formData.email_id);
+    setEmailValid(message)
     console.log(message);
     if (
       formData.first_name.length >= 5 &&
@@ -141,19 +142,23 @@ const UserForm = ({ bool, getId }) => {
 
   const handleSave = () => {
     console.log(formData);
+    const message = checkValidateform(formData.email_id);
+    setEmailValid(message)
     const docRef = doc(db, "User", getId.id);
     if (
-      formData.first_name &&
-      formData.last_name &&
-      formData.email_id &&
+      formData.first_name.length >= 5 &&
+      formData.last_name.length >= 5 &&
+      formData.address_1.length >= 10 &&
       formData.email_id &&
       formData.pinCode &&
       (phoneNumber || (data && data.phoneNumber)) &&
       (selectedCountry ||
         (selectedCountry &&
           data.selectedCountry &&
+          !message &&
           (State || (data && data.State))))
     ) {
+
       updateDoc(docRef, {
         first_name: formData.first_name,
         last_name: formData.last_name,
@@ -256,9 +261,7 @@ const UserForm = ({ bool, getId }) => {
               id='e-id'
             />
             <p className='text-[12px] text-red-600 text-center'>
-              {!formData.email_id.includes(".com") &&
-                formData.email_id.length > 0 &&
-                "Enter a Valid Mail"}
+              {emailValid}
             </p>
           </div>
 
@@ -432,4 +435,4 @@ const UserForm = ({ bool, getId }) => {
   );
 };
 
-export default UserForm;
+export default UserForm;
