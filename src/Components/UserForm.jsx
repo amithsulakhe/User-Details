@@ -149,13 +149,12 @@ const UserForm = ({ bool, getId }) => {
       formData.first_name.length >= 5 &&
       formData.last_name.length >= 5 &&
       formData.address_1.length >= 10 &&
-      formData.email_id &&
+      !message &&
       formData.pinCode &&
       (phoneNumber || (data && data.phoneNumber)) &&
       (selectedCountry ||
         (selectedCountry &&
           data.selectedCountry &&
-          !message &&
           (State || (data && data.State))))
     ) {
 
